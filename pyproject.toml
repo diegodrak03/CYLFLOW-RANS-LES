@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cylflow"
+version = "0.1.0"
+description = "Incompressible flow solver for cylindrical coordinates: RANS vs LES"
+authors = [{ name = "Diego Antúnez" }]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "pyyaml>=6.0",
+    "matplotlib>=3.8",
+    "h5py>=3.10",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "sympy>=1.12", "pyevtk>=1.6"]
+gpu-cuda12 = ["cupy-cuda12x>=13"]
+gpu-cuda13 = ["cupy-cuda13x>=13"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
