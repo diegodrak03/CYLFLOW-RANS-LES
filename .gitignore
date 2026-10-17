@@ -1,5 +1,7 @@
 TESTING/
 
+docs/
+
 results/
 *.h5
 *.npz

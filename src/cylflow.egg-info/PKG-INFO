@@ -14,6 +14,6 @@ Requires-Dist: pytest>=8; extra == "dev"
 Requires-Dist: sympy>=1.12; extra == "dev"
 Requires-Dist: pyevtk>=1.6; extra == "dev"
 Provides-Extra: gpu-cuda12
-Requires-Dist: cupy-cuda12x>=13; extra == "gpu-cuda12"
+Requires-Dist: cupy-cuda12x[ctk]>=13; extra == "gpu-cuda12"
 Provides-Extra: gpu-cuda13
-Requires-Dist: cupy-cuda13x>=13; extra == "gpu-cuda13"
+Requires-Dist: cupy-cuda13x[ctk]>=13; extra == "gpu-cuda13"
