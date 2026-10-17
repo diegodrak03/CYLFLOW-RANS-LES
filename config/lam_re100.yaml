@@ -1,0 +1,5 @@
+case: lam_re100
+physics:
+  Re: 100.0
+time:
+  t_final: 200.0

@@ -1,0 +1,43 @@
+# Default values. Each case overrides only what it needs.
+case: unnamed
+
+physics:
+  Re: 100.0
+  dimension: 2          # 2 or 3
+
+model:
+  type: laminar         # laminar | spalart_allmaras | smagorinsky | wale
+  Cs: 0.1               # Smagorinsky constant
+  van_driest: true      # wall damping for Smagorinsky
+  Cw: 0.325             # WALE constant
+  nutilde_inf: 3.0      # nu_tilde / nu at the inlet (Spalart-Allmaras)
+
+mesh:
+  R: 0.5                # cylinder radius (D = 1)
+  R_ext: 25.0           # outer boundary radius
+  Nr: 128
+  Ntheta: 192
+  Nz: 1
+  Lz: 3.141592653589793
+  dr_min: 0.01          # size of the first cell next to the wall
+
+time:
+  cfl: 0.8
+  cfl_visc: 0.4
+  t_final: 200.0
+  t_start_averaging: 100.0
+  dt_max: 0.01
+
+initial_condition:
+  type: potential       # potential | rest | checkpoint
+  noise: 0.01           # amplitude of the random perturbation
+  seed: 42
+
+output:
+  log_every_steps: 100
+  snapshot_every_t: 5.0
+  checkpoint_every_t: 20.0
+  probes:
+    - [1.0, 0.0, 0.0]
+    - [3.0, 0.5, 0.0]
+    - [5.0, 0.0, 0.0]
