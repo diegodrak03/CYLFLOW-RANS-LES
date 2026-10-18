@@ -71,4 +71,33 @@ def make_grid(R, R_ext, Nr, Nth, Nz, Lz, dr_min=None, beta=None):
 
     The Grid arrays must live in the backend (xp) with type DTYPE.
     """
-    raise NotImplementedError
+    if (dr_min is None) == (beta is None):
+        raise ValueError("Exactly one of dr_min or beta must be provided.")
+    if beta is None:
+        beta = beta_from_dr_min(R, R_ext, Nr, dr_min)
+    
+    rf = radial_faces(R, R_ext, Nr, beta)
+    rc = 0.5 * (rf[:-1] + rf[1:])
+    dr = rf[1:] - rf[:-1]
+    drc = rc[1:] - rc[:-1]
+    dth = 2 * np.pi / Nth          # a full turn split into Nth slices
+    j = np.arange(Nth)             # 0, 1, 2, ..., Nth-1
+    thc = j * dth                  # centers
+    thf = (j + 0.5) * dth          # faces: half a slice further
+
+    dz = Lz / Nz
+    k = np.arange(Nz)
+    zc = (k + 0.5) * dz
+    zf = (k + 1) * dz
+
+    vol_r = rc * dr * dth * dz                      # shape (Nr,): one value per ring
+    vol = vol_r[:, None, None] * np.ones((1, Nth, Nz))
+    
+    def to_xp(a):
+        return xp.asarray(a, dtype=DTYPE)
+
+    return Grid(R=R, R_ext=R_ext, Nr=Nr, Nth=Nth, Nz=Nz, Lz=Lz, beta=beta,
+                rf=to_xp(rf), rc=to_xp(rc), dr=to_xp(dr), drc=to_xp(drc),
+                dth=dth, thc=to_xp(thc), thf=to_xp(thf),
+                dz=dz, zc=to_xp(zc), zf=to_xp(zf), vol=to_xp(vol))
+
