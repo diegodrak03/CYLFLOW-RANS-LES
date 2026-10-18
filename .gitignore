@@ -21,3 +21,5 @@ openfoam/*/postProcessing/
 openfoam/*/constant/polyMesh/
 
 .vscode/
+
+*.png
