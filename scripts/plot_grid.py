@@ -7,7 +7,7 @@ from cylflow.grid import make_grid
 
 
 # 1. Build a small mesh (Nz = 1: we only look at the r-theta plane)
-g = make_grid(R=0.5, R_ext=5.0, Nr=40, Nth=64, Nz=1, Lz=1.0, dr_min=0.02)
+g = make_grid(R=0.5, R_ext=5.0, Nr=200, Nth=200, Nz=1, Lz=1.0, dr_min=0.003)
 
 # 2. Bring the arrays to the CPU (matplotlib only understands NumPy)
 rf = to_numpy(g.rf)
