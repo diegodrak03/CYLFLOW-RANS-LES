@@ -48,11 +48,11 @@ def beta_from_dr_min(R, R_ext, Nr, dr_min):
 class Grid:
     R: float          # cylinder radius
     R_ext: float      # outer radius
-    Nr: int
-    Nth: int
-    Nz: int
-    Lz: float
-    beta: float
+    Nr: int           # number of radial cells
+    Nth: int          # number of azimuthal cells
+    Nz: int           # number of vertical cells
+    Lz: float         # Cylinder length in z-direction
+    beta: float       # stretching parameter
     rf: object        # (Nr+1,)  radial faces
     rc: object        # (Nr,)    radial centers
     dr: object        # (Nr,)    cell widths
