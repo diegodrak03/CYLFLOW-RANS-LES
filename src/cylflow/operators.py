@@ -9,7 +9,7 @@ def col(a):
 def divergence(ur, ut, w, g):
     """Divergence at the cell centers. Inputs on faces, output (Nr, Nth, Nz)."""
 
-    div_z = w - xp.roll(w, 1, axis=2) /g.dz                          # w[k] - w[k-1]
+    div_z = (w - xp.roll(w, 1, axis=2)) / g.dz                          # w[k] - w[k-1]
     
     flux = col(g.rf) * ur
     div_r = (flux[1:] - flux[:-1]) / col(g.rc * g.dr)
@@ -25,9 +25,11 @@ def gradient(p, g):
     gr has shape (Nr+1, Nth, Nz) with gr[0] = gr[-1] = 0.
     """
 
-    gr_r = (p[:-1] - p[1:]) / col(g.dr)      
-
-    raise NotImplementedError
+    gr = xp.zeros((g.Nr + 1, g.Nth, g.Nz), dtype=p.dtype)
+    gr[1:-1] = (p[1:] - p[:-1]) / col(g.drc)
+    gt = (xp.roll(p, -1, axis=1) - p) / (col(g.rc) * g.dth)
+    gz = (xp.roll(p, -1, axis=2) - p) / g.dz
+    return gr, gt, gz
 
 
 def laplacian(p, g):
